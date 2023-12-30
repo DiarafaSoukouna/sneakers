@@ -32,8 +32,13 @@
             <div class="tab-content tab-space">
                 <div class="tab-pane active" id="preview-forms-simple">
                   <div class="row" >
-                      <div class="col-lg-11 mx-auto d-flex justify-content-center flex-column">
+                      <div class="col-lg-10 mx-auto d-flex justify-content-center flex-column">
                       <h3 class="text-center" style="font-family: math">Commande</h3>
+                      @if(session('success'))
+                      <div class="alert alert-success" style="--bs-alert-padding-y: 0.5rem !important; ">
+                         <div class="text-center text-white">{{ session('success') }}</div> 
+                      </div>
+                      @endif
                       <form role="form" id="contact-form" action="{{route('Commandes.store')}}" method="post" autocomplete="off">
                         @csrf
                         @method('POST')
@@ -42,7 +47,7 @@
                             <div class="col-md-2">
                               <label class="form-label">Type</label>
                               <div class="input-group input-group mb-4">
-                                <select class="form-control" id="type_id" name="type[]">
+                                <select class="form-control type_id" id="type_id" name="type[]" required>
                                   <option value="">-- choisir --</option>
                                   @foreach ($SousCategorie as $Sous)
                                   <option value="{{$Sous->id}}">{{$Sous->libelle}}</option>
@@ -53,7 +58,7 @@
                               <div class="col-md-2">
                                 <label class="form-label">Produit</label>
                                 <div class="input-group input-group mb-4">
-                                  <select class="form-control" id="Produit_id" name="produit[0]">
+                                  <select class="form-control" id="Produit_id" name="produit[0]" required>
 
                                   </select>
                                 </div>
@@ -61,7 +66,7 @@
                               <div class="col-md-2">
                                 <label class="form-label">Prix</label>
                                 <div class="input-group input-group mb-4">
-                                  <select class="form-control price" id="price" name="price[0]">
+                                  <select class="form-control price" id="price" name="price[0]" required>
 
                                   </select>
                                 </div>
@@ -157,7 +162,7 @@
               <div id="row${i}" class="row">
                 <div class="col-md-2">
                     <div class="input-group input-group mb-4">
-                      <select class="form-control select2 type_id" name="type[]">
+                      <select class="form-control select2 type_id" name="type[]" required>
                         <option value="">-- choisir --</option>
                         @foreach ($SousCategorie as $Sous)
                         <option value="{{$Sous->id}}">{{$Sous->libelle}}</option>
@@ -167,13 +172,13 @@
                   </div>
                   <div class="col-md-2">
                     <div class="input-group input-group mb-4">
-                      <select class="form-control Produit_id" name="produit[]">
+                      <select class="form-control Produit_id" name="produit[]" required>
                       </select>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="input-group input-group mb-4">
-                      <select class="form-control price" name="price[]">
+                      <select class="form-control price" name="price[]" required>
 
                       </select>
                     </div>
@@ -214,7 +219,7 @@
                 $(rowSelector + ' .montant').val(montant);
             }
         });
-
+        $(rowSelector + ' .type_id').select2();
         $(document).on('change', rowSelector + ' .type_id', function() {
             var id_cl = $(this).val();
             var produitDropdown = $(rowSelector + ' .Produit_id');
@@ -234,6 +239,7 @@
                         html += `<option value="${plans[i]['id']}">${plans[i]['libelle']}</option>`;
                     }
                     produitDropdown.html(html);
+                    produitDropdown.select2();
                     montant.val("");
                     quantity.val("1");
                     price.val("");
@@ -293,6 +299,7 @@
 
 
 // première affichage de du truc 
+        $(".type_id").select2();
         $(document).on('click', '.remove_row', function() {
             var row_id = $(this).attr("id");
             $('#row' + row_id + '').remove();
@@ -323,6 +330,7 @@
                           html += `<option  value="${plans[i]['id']}">${plans[i]['libelle']}</option>`;
                         }
                         $("#Produit_id").html(html);
+                        $("#Produit_id").select2();
                         document.getElementById("price").value = "";
                         document.getElementById("montant1").value = "";
                         document.getElementById("quantity").value = "1";

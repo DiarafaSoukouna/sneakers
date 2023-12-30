@@ -14,13 +14,19 @@ class DashboardController extends Controller
     {   
         
         $user= DB::select("SELECT count(id) as numbers FROM users");
+        
         $user_id = Auth::user()->id;
+        $nbre_commandes = DB::select("SELECT count(user_id) AS nbre FROM commandes WHERE user_id = $user_id and date_commande = CURRENT_DATE;");
         $commande = DB::select("SELECT date_commande, user_id, SUM(price_commande) as montant_total, SUM(quantity) as quantite_total
         FROM commandes
         INNER JOIN contenirs ON commandes.id = contenirs.commande
         WHERE user_id = $user_id and date_commande = CURRENT_DATE
         GROUP BY date_commande, user_id;");
-        return view('acceuil',compact('commande','user'));
+        $produits = DB::select("SELECT produits.id as ids, price, produits.libelle as libelle, categories.id as id_categorie,
+         sous_categories.libelle as sous_categories , categories.libelle as categories
+         FROM produits INNER join sous_categories on produits.type = sous_categories.id 
+         inner join categories on categories.id = sous_categories.categorie;");
+        return view('acceuil',compact('commande','user', 'nbre_commandes', 'produits'));
     }
 
     /**

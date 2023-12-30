@@ -135,7 +135,6 @@
             }, 
     } );
   </script>
-
 <script type="text/javascript">
 
   if (document.getElementById('state1')) {
@@ -163,32 +162,5 @@
     };
   }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
-
 </html>

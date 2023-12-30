@@ -76,7 +76,7 @@ class contenir extends Controller
         }
         
         
-        return redirect()->back();
+        return back()->with(['success' => 'commande effectuée avec succès.']);
     }
 
     /**

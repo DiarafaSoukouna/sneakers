@@ -44,7 +44,7 @@ class Users extends Controller
             'password' => Hash::make('12345'),
             'first_connect' => 0,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Utilisateurs ajouter avec success.');;
     }
 
     /**

@@ -86,6 +86,11 @@
                         </ul>
                     </div>
                     @endif
+                    @if(session('success'))
+                      <div class="alert alert-success" style="--bs-alert-padding-y: 0.5rem !important; ">
+                         <div class="text-center text-white">{{ session('success') }}</div> 
+                      </div>
+                      @endif
                   <div class="card-body p-0 my-3">
                     <div class="row">
                       <div class="col-md-6">

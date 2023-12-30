@@ -8,7 +8,7 @@
         <div class="col-lg-7 text-center mx-auto"> 
           {{--  <p class="lead text-white mt-3">Direcction de l'informatique et de l'infomation sanitaire(DIIS) </p> --}}
           {{-- <h2 class="text-white pt-3 mt-n5">SYSTEME D'INFORMATION DE GESTION(SIG)</h2> --}}
-          <h2 class="text-white pt-3 ">Rapport mensuel  <br/> de l'établissement sanitaire primaire </h2>
+          {{-- <h2 class="text-white pt-3 ">Rapport mensuel  <br/> de l'établissement sanitaire primaire </h2> --}}
           <div class="buttons">
             <a href="{{route('Commandes.index')}}" type="button" class="btn btn-white mt-4">Ajouter une commande</a>
           </div>
@@ -25,24 +25,6 @@
     <div class="row">
       <div class="col-lg-9 mx-auto py-3">
         <div class="row">
-          <div class="col-md-4 position-relative">
-            <div class="p-3 text-center">
-              <h1 class="text-gradient text-primary"><span id="state1" countTo="75">0</span></h1>
-              <h5 class="mt-3"><a href="#">Rapports</a></h5>
-              <p class="text-sm font-weight-normal">Les rapports de générés par les établissements.</p>
-            </div>
-            <hr class="vertical dark">
-          </div>
-          <div class="col-md-4 position-relative">
-            <div class="p-3 text-center">
-              @foreach ($commande as $com)
-              <h1 class="text-gradient text-primary"> <span id="state2" countTo="{{$com->montant_total}}">0</span></h1>
-              @endforeach
-              <h5 class="mt-3"><a href="{{route('Commandes.index')}}">Commandes</a></h5>
-              <p class="text-sm font-weight-normal">Les commandes effectueés aujourd'hui. </p>
-            </div>
-            <hr class="vertical dark">
-          </div>
           <div class="col-md-4">
             <div class="p-3 text-center">
               @foreach ($user as $com)
@@ -51,6 +33,25 @@
               <h5 class="mt-3"><a href="#">Utilisateurs</a></h5>
               <p class="text-sm font-weight-normal">Les personnes qui ont le droit d'accès au systéme.</p>
             </div>
+          </div><div class="col-md-4 position-relative">
+            <div class="p-3 text-center">
+              @foreach ($nbre_commandes as $com)
+              <h1 class="text-gradient text-primary"> <span id="state2" countTo="{{$com->nbre}}">0</span></h1>
+              @endforeach
+              <h5 class="mt-3"><a href="{{route('Commandes.index')}}">Nombre de commande</a></h5>
+              <p class="text-sm font-weight-normal">Le nombre de commande effectueé aujourd'hui. </p>
+            </div>
+            <hr class="vertical dark">
+          </div>
+          <div class="col-md-4 position-relative">
+            <div class="p-3 text-center">
+              @foreach ($commande as $com)
+              <h1 class="text-gradient text-primary"> <span id="state1" countTo="{{$com->montant_total}}">0</span></h1>
+              @endforeach
+              <h5 class="mt-3"><a href="#">Montant total des commande</a></h5>
+              <p class="text-sm font-weight-normal">Le montant total des commandes effectueés aujourd'hui.</p>
+            </div>
+            <hr class="vertical dark">
           </div>
         </div>
       </div>
@@ -62,72 +63,207 @@
 <section class="my-5 py-5">
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 ms-auto">
-        <div class="row justify-content-start">
-          <div class="col-md-6">
-            <div class="info">
-              <i class="material-icons text-gradient text-primary text-3xl">content_copy</i>
-              <h5 class="font-weight-bolder mt-3">Fast Food</h5>
-              <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" style="border-radius: 10px">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="info">
-              <i class="material-icons text-gradient text-primary text-3xl">flip_to_front</i>
-              <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
-              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" style="border-radius: 10px">
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-start mt-5">
-          <div class="col-md-6 mt-3">
-            <i class="material-icons text-gradient text-primary text-3xl">price_change</i>
-            <h5 class="font-weight-bolder mt-3">Drink</h5>
-            <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" alt="" style="border-radius: 10px">
-          </div>
-          <div class="col-md-6 mt-3">
-            <div class="info">
-              <i class="material-icons text-gradient text-primary text-3xl">devices</i>
-              <h5 class="font-weight-bolder mt-3">Coffee</h5>
-              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="640" height="415" alt="" style="border-radius: 10px">
-            </div>
-          </div>
+      <div class="col-lg-3">
+        <div class="" style="border-radius:10px;padding:2px;color:black;font-size:50px"> 
+         <i class="fas fa-cart-plus"> PANIER</i> 
+         <div class="row" id="panier" style="font-size: 15px">
+
+         </div>
         </div>
       </div>
-      {{-- <div class="col-lg-4 ms-auto me-auto p-lg-4 mt-lg-0 mt-4">
-        <div class="rotating-card-container">
-          <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-            <div class="front front-background" style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
-              <div class="card-body py-7 text-center">
-                <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                <h3 class="text-white"> <img src="{{asset('admintemplate')}}/assets/img/embleme.png" height="100" width="100"></h3>
-                {{-- <img src="{{asset('admintemplate')}}/assets/img/dirb.png" height="55" width="330"> -}}
-                 <h3 class="text-white">Direcction de l'informatique et de l'infomation sanitaire(DIIS)</h3> 
-                {{-- <p class="text-white opacity-8">SYSTEME D'INFORMATION DE GESTION(SIG)</p> -}}
+      <div class="col-lg-9 ms-auto">
+        <div class="img">
+          <div class="row justify-content-start">
+            <div class="col-md-6">
+              <div class="info">
+                <h5 class="font-weight-bolder mt-3">Fast Food</h5>
+                <a href="#">
+                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px" onclick="showDetails('food')">
+                </a>
               </div>
             </div>
-            <div class="back back-background" style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1365&q=80); background-size: cover;">
-              <div class="card-body pt-7 text-center">
-                <h3 class="text-white">(SIG)</h3>
-                <p class="text-white opacity-8"> Rapport mensuel de l'établissement sanitaire primaire</p>
-                @if(auth()->user()->profil_id == 1)
-                <a href="{{route('Utilisateurs.index')}}" class="btn btn-white btn-sm w-50 mx-auto mt-3">Ajouter un utilisateur</a>
-                @endif
-          @if(auth()->user()->profil_id == 2 || auth()->user()->profil_id == 4)
-                <a href="{{route('Rapports.index')}}" class="btn btn-white btn-sm w-50 mx-auto mt-3">Rédiger un rapport</a>
-                @else
-                <a href="{{route('Rapports.create')}}" class="btn btn-white btn-sm w-50 mx-auto mt-3">Les Rapports</a>
-               
-                @endif
+            <div class="col-md-6">
+              <div class="info">
+                <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
+                <a href="#">
+                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" width="450" style="border-radius: 10px" onclick="showDetails('iceCream')">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-start mt-5">
+            <div class="col-md-6 mt-3">
+              <h5 class="font-weight-bolder mt-3">Drink</h5>
+              <a href="#">
+                <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="450" alt="" style="border-radius: 10px" onclick="showDetails('drink')">
+              </a>
+            </div>
+            <div class="col-md-6 mt-3">
+              <div class="info">
+                <h5 class="font-weight-bolder mt-3">Coffee</h5>
+                <a href="#">
+                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="450" height="300" alt="" style="border-radius: 10px"onclick="showDetails('coffee')">
+                </a>
               </div>
             </div>
           </div>
         </div>
-      </div> --}}
-      
+        
+        <div id="details-food" style="display: none;">
+          <!-- Contenu pour Fast Food -->
+          <div style="display: flex">
+            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <div style="margin-left: 30%">
+              <h4>Détails Fast Food...</h4>
+            </div>
+          </div>
+           <div class="row">
+            @foreach ($produits as $produit)
+            @if ($produit->id_categorie == 1)
+            <div class="col-lg-4">
+              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px"><br>
+              <div style="margin-left: 20%">
+                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
+              </div>
+              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            </div>
+            @endif
+            @endforeach
+           </div>
+        </div>
+        
+        <div id="details-iceCream" style="display: none;">
+          <div style="display: flex">
+            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <div style="margin-left: 30%">
+              <h4>Détails Ice Cream...</h4>
+            </div>
+          </div>
+          <div class="row">
+            @foreach ($produits as $produit)
+            @if ($produit->id_categorie == 2)
+            <div class="col-lg-4">
+              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <div style="margin-left: 20%">
+                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
+              </div>
+              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            </div>
+            @endif
+            @endforeach
+           </div>
+        </div>
+        <div id="details-drink" style="display: none;">
+          <div style="display: flex">
+            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <div style="margin-left: 30%">
+              <h4>Détails Drink...</h4>
+            </div>
+          </div>
+          <div class="row">
+            @foreach ($produits as $produit)
+            @if ($produit->id_categorie == 3)
+            <div class="col-lg-4">
+              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <div style="margin-left: 20%">
+                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
+              </div>
+              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            </div>
+            @endif
+            @endforeach
+           </div>
+        </div>
+        <div id="details-coffee" style="display: none;">
+          <div style="display: flex">
+            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"> Retour </i>
+            <div style="margin-left: 30%">
+              <h4>Détails Coffee...</h4>
+            </div>
+          </div>
+          <div class="row">
+            @foreach ($produits as $produit)
+            @if ($produit->id_categorie == 4)
+            <div class="col-lg-4">
+              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <div style="margin-left: 20%">
+                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
+              </div>
+              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            </div>
+            @endif
+            @endforeach
+           </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 </div>
+<script>
+  function showDetails(category) {
+    // Cacher le contenu de la classe .img
+    document.querySelector('.img').style.display = 'none';
+
+    // Masquer toutes les divs détaillées
+    hideAllDetails();
+
+    // Afficher la div détaillée correspondante à la catégorie
+    document.getElementById('details-' + category).style.display = 'block';
+  }
+
+
+  function showAllimage() {
+      // Masquer toutes les divs détaillées
+      document.querySelector('.img').style.display = 'block';
+      hideAllDetails();
+      
+  }
+  function hideAllDetails() {
+      // Masquer toutes les divs détaillées
+      var detailDivs = document.querySelectorAll('[id^="details-"]');
+      detailDivs.forEach(function (div) {
+          div.style.display = 'none';
+      });
+  }
+  var panier = [];  // Utilisez un tableau pour stocker les produits dans le panier
+
+function showDetailss(idProduit, nomProduit, prixProduit) {
+    // Vérifier si le produit est déjà dans le panier
+    var produitExistant = panier.find(function(produit) {
+        return produit.idProduit === idProduit;
+    });
+
+    if (produitExistant) {
+        // Si le produit existe déjà, augmenter la quantité
+        produitExistant.quantite += 1;
+    } else {
+        // Sinon, ajouter le produit au panier avec une quantité de 1 par défaut
+        panier.push({
+            idProduit: idProduit,
+            nomProduit: nomProduit,
+            prixProduit: prixProduit,
+            quantite: 1
+        });
+    }
+
+    // Mettre à jour l'affichage du panier
+    updateCartDisplay();
+}
+
+function updateCartDisplay() {
+    // Mettez à jour l'affichage du panier ici
+    var panierDiv = document.getElementById('panier');
+    panierDiv.innerHTML = "";  // Effacer le contenu actuel du panier
+
+    // Parcourir les produits dans le panier et les ajouter à l'affichage
+    panier.forEach(function(produit) {
+        var produitDiv = document.createElement('div');
+        produitDiv.textContent = produit.nomProduit + ' - ' + produit.prixProduit + ' Fr (Quantité: ' + produit.quantite + ')';
+        panierDiv.appendChild(produitDiv);
+    });
+}
+
+</script>
     @endsection
