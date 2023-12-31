@@ -59,7 +59,14 @@
   </div>
 </section>
 
-
+<style>
+  .produit-details, .produit-ligne{
+    display: flex; justify-content: space-between;
+  }
+  .border1{
+    border-bottom: 2px solid black;
+  }
+</style>
 <section class="my-5 py-5">
   <div class="container">
     <div class="row">
@@ -77,7 +84,7 @@
             <div class="col-md-6">
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Fast Food</h5>
-                <a href="#">
+                <a>
                   <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px" onclick="showDetails('food')">
                 </a>
               </div>
@@ -85,7 +92,7 @@
             <div class="col-md-6">
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
-                <a href="#">
+                <a>
                   <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" width="450" style="border-radius: 10px" onclick="showDetails('iceCream')">
                 </a>
               </div>
@@ -94,14 +101,14 @@
           <div class="row justify-content-start mt-5">
             <div class="col-md-6 mt-3">
               <h5 class="font-weight-bolder mt-3">Drink</h5>
-              <a href="#">
+              <a>
                 <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="450" alt="" style="border-radius: 10px" onclick="showDetails('drink')">
               </a>
             </div>
             <div class="col-md-6 mt-3">
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Coffee</h5>
-                <a href="#">
+                <a>
                   <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="450" height="300" alt="" style="border-radius: 10px"onclick="showDetails('coffee')">
                 </a>
               </div>
@@ -121,7 +128,7 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 1)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px"><br>
+              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'food1.avif')"><br>
               <div style="margin-left: 20%">
                 <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
               </div>
@@ -143,7 +150,7 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 2)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'oklm.avif')"><br>
               <div style="margin-left: 20%">
                 <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
               </div>
@@ -164,7 +171,7 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 3)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
               <div style="margin-left: 20%">
                 <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
               </div>
@@ -174,6 +181,7 @@
             @endforeach
            </div>
         </div>
+        
         <div id="details-coffee" style="display: none;">
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"> Retour </i>
@@ -185,7 +193,7 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 4)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"><br>
+              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'cafe.avif')"><br>
               <div style="margin-left: 20%">
                 <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
               </div>
@@ -229,7 +237,7 @@
   }
   var panier = [];  // Utilisez un tableau pour stocker les produits dans le panier
 
-function showDetailss(idProduit, nomProduit, prixProduit) {
+function showDetailss(idProduit, nomProduit, prixProduit, image) {
     // Vérifier si le produit est déjà dans le panier
     var produitExistant = panier.find(function(produit) {
         return produit.idProduit === idProduit;
@@ -244,6 +252,7 @@ function showDetailss(idProduit, nomProduit, prixProduit) {
             idProduit: idProduit,
             nomProduit: nomProduit,
             prixProduit: prixProduit,
+            image: image,
             quantite: 1
         });
     }
@@ -259,11 +268,43 @@ function updateCartDisplay() {
 
     // Parcourir les produits dans le panier et les ajouter à l'affichage
     panier.forEach(function(produit) {
+        // Créer une div pour chaque produit
         var produitDiv = document.createElement('div');
-        produitDiv.textContent = produit.nomProduit + ' - ' + produit.prixProduit + ' Fr (Quantité: ' + produit.quantite + ')';
+        produitDiv.className = 'produit';  // Ajouter une classe pour le style CSS
+
+        // Ajouter du code HTML avec des balises pour chaque produit
+        produitDiv.innerHTML = `
+          <div class="border1">
+            <div class="produit-ligne">
+                <img src="{{asset('admintemplate')}}/assets/img/${produit.image}" width="60" alt="${produit.nomProduit}">
+                <span class="nom-produit">${produit.nomProduit}</span>
+                <span class="quantite">Quantité: ${produit.quantite}</span>
+            </div>
+            <div class="produit-details">
+                <span class="montant text-primary">Montant:  ${produit.prixProduit * produit.quantite} Fr</span>
+                <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">X</button> 
+            </div>
+          </div><br/>
+        `;
+
+        // Ajouter la div du produit au panier
         panierDiv.appendChild(produitDiv);
     });
 }
+function supprimerProduit(idProduit) {
+    // Ajoutez ici votre logique pour supprimer le produit du panier en utilisant l'id du produit
+    // Par exemple, vous pouvez utiliser une boucle pour trouver l'index du produit dans le tableau panier et le supprimer
+    
+    for (var i = 0; i < panier.length; i++) {
+        if ( parseInt(panier[i].idProduit) === idProduit) {
+            panier.splice(i, 1); // Supprimer le produit du tableau
+            break; // Sortir de la boucle une fois que le produit est trouvé et supprimé
+        }
+    }
+    console.log("moh", idProduit); //
+    // Mettez à jour l'affichage du panier après la suppression
+    updateCartDisplay();
+}
 
 </script>
-    @endsection
+@endsection
