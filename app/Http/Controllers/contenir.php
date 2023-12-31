@@ -20,7 +20,21 @@ class contenir extends Controller
     public function index()
     {    
         $user_id = Auth::user()->id;
-        $commande = DB::select("SELECT `date_commande`, user_id,sum(price_commande) as montant_total, sum(quantity) as quantite_total FROM `commandes` inner join contenirs on commandes.id = contenirs.commande WHERE user_id = $user_id GROUP by commandes.id;");
+        $commande = DB::select("
+    SELECT
+        `date_commande`,
+        user_id,
+        SUM(price_commande) AS montant_total,
+        SUM(quantity) AS quantite_total
+    FROM
+        `commandes`
+    INNER JOIN
+        `contenirs` ON commandes.id = contenirs.commande
+    WHERE
+        user_id = $user_id
+    GROUP BY
+        `date_commande`, user_id
+");
         $SousCategorie = SousCategorie::all();
         $user= User::all();
         return view('commande', compact('SousCategorie', 'commande', 'user'));

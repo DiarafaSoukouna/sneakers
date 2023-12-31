@@ -128,11 +128,17 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 1)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'food1.avif')"><br>
-              <div style="margin-left: 20%">
-                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
+            <div style="margin-bottom: 20px">
+            <div class="card">
+             
+              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'food1.avif')"><br>
+              <div style="margin-left: 10%;">
+              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+              <p><span>{{$produit->price}} Fr</span> </p>
+                </div>
               </div>
-              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+              </div>
+              
             </div>
             @endif
             @endforeach
@@ -143,18 +149,23 @@
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
-              <h4>Détails Ice Cream...</h4>
+              <h4 style="font-family: match; font-size: 22px; margin-bottom: 10px">Nos offres d'Ice Cream...</h4>
             </div>
           </div>
           <div class="row">
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 2)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'oklm.avif')"><br>
-              <div style="margin-left: 20%">
-                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
-              </div>
-              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            <div style="margin-bottom: 20px">
+            <div class="card">
+              
+              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'oklm.avif')"><br>    
+                <div style="margin-left: 10%;">
+              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+              <p><span>{{$produit->price}} Fr</span> </p>
+                </div>
+                </div>
+            </div>
             </div>
             @endif
             @endforeach
@@ -171,12 +182,18 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 3)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
-              <div style="margin-left: 20%">
-                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
-              </div>
-              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            <div style="margin-bottom: 20px">
+            <div class="card">
+              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
+              <div style="margin-left: 10%;">
+              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+              <p><span>{{$produit->price}} Fr</span> </p>
             </div>
+            </div>
+            </div>
+            </div>
+
+
             @endif
             @endforeach
            </div>
@@ -193,12 +210,18 @@
             @foreach ($produits as $produit)
             @if ($produit->id_categorie == 4)
             <div class="col-lg-4">
-              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'cafe.avif')"><br>
-              <div style="margin-left: 20%">
-                <h5 class="text-primary"> <span>{{$produit->price}}</span> Fr</h5>
-              </div>
-              <label for="" style="font-size: 17px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+            <div style="margin-bottom: 20px">
+            <div class="card">
+              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'cafe.avif')"><br>
+              <div style="margin-left: 10%;">
+              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+              <p><span>{{$produit->price}} Fr</span> </p>
             </div>
+            </div>
+            </div>
+
+            </div>
+
             @endif
             @endforeach
            </div>
