@@ -67,6 +67,44 @@
     border-bottom: 2px solid black;
   }
 </style>
+{{-- <button  class="btn btn-white mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fas fa-plus-circle"> Nouveau Utilisateur</i> </button>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modification Utilisateurs</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"> Modifier</i></button>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Choisissez le prix</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenu du modal -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div> --}}
 <section class="my-5 py-5">
   <div class="container">
     <div class="row">
@@ -85,7 +123,7 @@
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Fast Food</h5>
                 <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px" onclick="showDetails('food')">
+                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px" onclick="showDetails('food');Get_produit('8', '1');">
                 </a>
               </div>
             </div>
@@ -93,7 +131,7 @@
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
                 <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" width="450" style="border-radius: 10px" onclick="showDetails('iceCream')">
+                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" width="450" style="border-radius: 10px" onclick="showDetails('iceCream');Get_produit('1', '2');">
                 </a>
               </div>
             </div>
@@ -109,40 +147,45 @@
               <div class="info">
                 <h5 class="font-weight-bolder mt-3">Coffee</h5>
                 <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="450" height="300" alt="" style="border-radius: 10px"onclick="showDetails('coffee')">
+                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="450" height="300" alt="" style="border-radius: 10px"onclick="showDetails('coffee');Get_produit('9', '3');">
                 </a>
               </div>
             </div>
           </div>
         </div>
-        
+        <style>
+          .div {
+            display: flex;
+            flex-wrap: wrap;
+          }
+          .diva{
+            background-color: #f0f0f0;
+            padding: .3rem 1rem;
+            margin: .2rem .15rem;
+            border-radius: 10rem;
+            font-weight: 600;
+            color: blue;
+          }
+        </style>
         <div id="details-food" style="display: none;">
-          <!-- Contenu pour Fast Food -->
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4>Détails Fast Food...</h4>
             </div>
           </div>
-           <div class="row">
-            @foreach ($produits as $produit)
-            @if ($produit->id_categorie == 1)
-            <div class="col-lg-4">
-            <div style="margin-bottom: 20px">
-            <div class="card">
-             
-              <img src="{{asset('admintemplate')}}/assets/img/food1.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'food1.avif')"><br>
-              <div style="margin-left: 10%;">
-              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
-              <p><span>{{$produit->price}} Fr</span> </p>
-                </div>
-              </div>
-              </div>
-              
-            </div>
+          <div class="div">
+            @forEach($sous_categorie as $sous)
+            @if ($sous->categorie == 1)
+              <a class="diva" onclick="Get_produit('{{$sous->id}}','1');">
+                {{$sous->libelle}}
+              </a>
             @endif
             @endforeach
-           </div>
+          </div>
+            <div id="price1">
+
+            </div>
         </div>
         
         <div id="details-iceCream" style="display: none;">
@@ -152,24 +195,18 @@
               <h4 style="font-family: match; font-size: 22px; margin-bottom: 10px">Nos offres d'Ice Cream...</h4>
             </div>
           </div>
-          <div class="row">
-            @foreach ($produits as $produit)
-            @if ($produit->id_categorie == 2)
-            <div class="col-lg-4">
-            <div style="margin-bottom: 20px">
-            <div class="card">
-              
-              <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block"  onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'oklm.avif')"><br>    
-                <div style="margin-left: 10%;">
-              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
-              <p><span>{{$produit->price}} Fr</span> </p>
-                </div>
-                </div>
-            </div>
-            </div>
+          <div class="div">
+            @forEach($sous_categorie as $sous)
+            @if ($sous->categorie == 2)
+              <a class="diva" onclick="Get_produit('{{$sous->id}}', '2');">
+                {{$sous->libelle}}
+              </a>
             @endif
             @endforeach
-           </div>
+          </div>
+          <div id="price2">
+
+          </div>
         </div>
         <div id="details-drink" style="display: none;">
           <div style="display: flex">
@@ -178,22 +215,29 @@
               <h4>Détails Drink...</h4>
             </div>
           </div>
+          {{-- <div class="div">
+            @forEach($sous_categorie as $sous)
+            @if ($sous->categorie == 4)
+              <a class="diva">
+                {{$sous->libelle}}
+              </a>
+            @endif
+            @endforeach
+          </div> --}}
           <div class="row">
             @foreach ($produits as $produit)
-            @if ($produit->id_categorie == 3)
+            @if ($produit->id_categorie == 4)
             <div class="col-lg-4">
-            <div style="margin-bottom: 20px">
-            <div class="card">
-              <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
-              <div style="margin-left: 10%;">
-              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
-              <p><span>{{$produit->price}} Fr</span> </p>
+              <div style="margin-bottom: 20px">
+                <div class="card">
+                  <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
+                  <div style="margin-left: 10%;">
+                    <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
+                    <p><span>{{$produit->price}} Fr</span> </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            </div>
-            </div>
-            </div>
-
-
             @endif
             @endforeach
            </div>
@@ -201,34 +245,28 @@
         
         <div id="details-coffee" style="display: none;">
           <div style="display: flex">
-            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}')"> Retour </i>
+            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4>Détails Coffee...</h4>
             </div>
           </div>
-          <div class="row">
-            @foreach ($produits as $produit)
-            @if ($produit->id_categorie == 4)
-            <div class="col-lg-4">
-            <div style="margin-bottom: 20px">
-            <div class="card">
-              <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'cafe.avif')"><br>
-              <div style="margin-left: 10%;">
-              <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
-              <p><span>{{$produit->price}} Fr</span> </p>
-            </div>
-            </div>
-            </div>
-
-            </div>
-
+          <div class="div">
+            @forEach($sous_categorie as $sous)
+            @if ($sous->categorie == 3)
+              <a class="diva" onclick="Get_produit('{{$sous->id}}', '3');">
+                {{$sous->libelle}}
+              </a>
             @endif
             @endforeach
-           </div>
+            <div id="price3">
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  
 </section>
 
 </div>
@@ -260,7 +298,7 @@
   }
   var panier = [];  // Utilisez un tableau pour stocker les produits dans le panier
 
-function showDetailss(idProduit, nomProduit, prixProduit, image) {
+  function showDetailss(idProduit, nomProduit, prixProduit, image) {
     // Vérifier si le produit est déjà dans le panier
     var produitExistant = panier.find(function(produit) {
         return produit.idProduit === idProduit;
@@ -274,15 +312,58 @@ function showDetailss(idProduit, nomProduit, prixProduit, image) {
         panier.push({
             idProduit: idProduit,
             nomProduit: nomProduit,
-            prixProduit: prixProduit,
             image: image,
             quantite: 1
         });
+
+        // Vérifier si le produit a plusieurs prix
+        if (prixProduit.includes(',')) {
+            // Si oui, divisez la chaîne en un tableau de prix
+            var prixArray = prixProduit.split(',');
+
+            // Afficher le modal avec les différents prix
+            var modal = document.getElementById('myModal');
+            var modalBody = modal.querySelector('.modal-body');
+            modalBody.innerHTML = '';
+
+            prixArray.forEach(function(prix) {
+                var prixButton = document.createElement('button');
+                prixButton.textContent = prix.trim() + ' Fr';
+                prixButton.className = 'btn btn-primary';
+                prixButton.onclick = function() {
+                    // Ajouter le produit avec le prix sélectionné au panier
+                    panier.push({
+                        idProduit: idProduit,
+                        nomProduit: nomProduit,
+                        image: image,
+                        prixProduit: parseFloat(prix.trim()), // Convertir le prix en nombre
+                        quantite: 1
+                    });
+
+                    // Mettre à jour l'affichage du panier
+                    updateCartDisplay();
+
+                    // Fermer le modal
+                    $('#myModal').modal('hide');
+                };
+
+                modalBody.appendChild(prixButton);
+            });
+
+            // Afficher le modal
+            $('#myModal').modal('show');
+        } else {
+            // Si un seul prix, ajouter directement au panier
+            panier[panier.length - 1].prixProduit = parseFloat(prixProduit);
+            updateCartDisplay();
+        }
     }
 
     // Mettre à jour l'affichage du panier
     updateCartDisplay();
 }
+
+
 
 function updateCartDisplay() {
     // Mettez à jour l'affichage du panier ici
@@ -328,6 +409,35 @@ function supprimerProduit(idProduit) {
     // Mettez à jour l'affichage du panier après la suppression
     updateCartDisplay();
 }
-
+function Get_produit(idProduit,id) {
+    $.ajax({
+          url: "./Get_produit/" + idProduit,
+          type: "GET",
+          success: function(data) {
+              console.log('data', data);
+              var plans = data.Type;
+              var html = "";
+              html += "<div class='row'>";
+              for (let i = 0; i < plans.length; i++) {
+                  html += `
+                  <div class="col-lg-4">
+                    <div style="margin-bottom: 20px">
+                      <div class="card">
+                        <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('${plans[i]['id']}', '${plans[i]['libelle']}', '${plans[i]['price']}', 'cafe.avif')"><br>
+                        <div style="margin-left: 10%;">
+                        <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">${plans[i]['libelle']}</label>
+                         <p><span>${plans[i]['price']} Fr</span> </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`;
+              }
+              html += "</div>";
+              // Mettre à jour le contenu du champ de sélection avec les options générées
+              var price = $("#price" + id)
+              price.html(html);
+          }
+      });
+ }
 </script>
 @endsection

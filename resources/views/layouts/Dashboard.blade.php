@@ -1,15 +1,3 @@
-<!--
-=========================================================
-* Material Kit 2 - v3.0.4
-=========================================================
-
-* Product Page:  https://www.creative-tim.com/product/material-kit 
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
 <html lang="en" itemscope >
 <head>
@@ -18,8 +6,6 @@
 
 <link rel="apple-touch-icon" sizes="76x76" href="{{asset('admintemplate')}}/assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="{{asset('admintemplate')}}/assets/img/favicon.png">
-
-
 <script src="{{asset('admintemplate')}}/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="{{asset('admintemplate')}}/assets/js/core/popper.min.js" type="text/javascript"></script>
 <script src="{{asset('admintemplate')}}/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -27,18 +13,7 @@
 
 <script src="{{asset('admintemplate')}}/assets/libs/select2/dist/js/select2.full.min.js"></script>
 <script src="{{asset('admintemplate')}}/assets/libs/select2/dist/js/select2.min.js"></script>
-
-<title>
-  
-
-  
-  HOUSE CREAM
-
-  
-</title>
-
-
-
+<title> HOUSE CREAM</title>
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
