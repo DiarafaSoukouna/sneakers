@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\contenirs;
+use App\Models\Commande;
 use App\Models\Produit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -54,7 +57,23 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dateActuelle = Carbon::now();
+
+        $commande = Commande::create([
+             'date_commande' => $dateActuelle,
+             'user_id' => Auth::user()->id,
+         ]);
+         for ($j = 0; $j < count($request->produit); $j++) {
+             contenirs::create([
+                 'commande' => $commande->id,
+                 'produit' => $request->produit[$j],
+                 'quantity' => $request->quantity[$j],
+                 'price_commande' => $request->price[$j],
+             ]);
+         }
+         
+         
+         return back()->with(['success' => 'commande effectuée avec succès.']);
     }
 
     /**
@@ -62,9 +81,8 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
-
     /**
      * Show the form for editing the specified resource.
      */

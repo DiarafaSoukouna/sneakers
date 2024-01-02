@@ -33,6 +33,7 @@ Route::post('/reset-password',[LoginController::class, 'reset'] )->name('passwor
 Route::middleware(['auth'])->group(function () {
     Route::post('/first_connect', [LoginController::class, 'first_connect'])->name('first_connect');
     Route::get('/Dashboard', [DashboardController::class, 'index'] )->name('dashboard');
+    Route::post('/DashboardStore', [DashboardController::class, 'store'] )->name('dashboard_store');
     Route::get('Get_produit/{idProduit}', [DashboardController::class, 'GetProduit']);
     Route::get('/First_connect', function () {
         return view('first_connect');

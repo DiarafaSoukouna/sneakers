@@ -111,12 +111,22 @@
       <div class="col-lg-3">
         <div class="" style="border-radius:10px;padding:2px;color:black;font-size:50px"> 
          <i class="fas fa-cart-plus"> PANIER</i> 
+         <form action="{{route('dashboard_store')}}" method="post" autocomplete="off">
+          @csrf
+          @method('POST')
          <div class="row" id="panier" style="font-size: 15px">
 
          </div>
+         <button type="submit" class="btn btn-primary w-100">Valider</button>
+         </form>
         </div>
       </div>
       <div class="col-lg-9 ms-auto">
+        @if(session('success'))
+                      <div class="alert alert-success" style="--bs-alert-padding-y: 0.5rem !important; ">
+                         <div class="text-center text-white">{{ session('success') }}</div> 
+                      </div>
+                      @endif
         <div class="img">
           <div class="row justify-content-start">
             <div class="col-md-6">
@@ -384,8 +394,11 @@ function updateCartDisplay() {
                 <span class="nom-produit">${produit.nomProduit}</span>
                 <span class="quantite">Quantité: ${produit.quantite}</span>
             </div>
+            <input class="form-control" type="hidden" name="produit[]" value="${produit.idProduit}"> 
+            <input class="form-control" type="hidden" name="price[]" value="${produit.prixProduit}"> 
+            <input class="form-control" type="hidden" name="quantity[]" value="${produit.quantite}"> 
             <div class="produit-details">
-                <span class="montant text-primary">Montant:  ${produit.prixProduit * produit.quantite} Fr</span>
+                <span class="montant text-primary">Prix unitaire:  ${produit.prixProduit} Fr</span>
                 <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">X</button> 
             </div>
           </div><br/>
