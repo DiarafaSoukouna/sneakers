@@ -48,7 +48,7 @@
               @foreach ($commande as $com)
               <h1 class="text-gradient text-primary"> <span id="state1" countTo="{{$com->montant_total}}">0</span></h1>
               @endforeach
-              <h5 class="mt-3"><a href="#">Montant total des commande</a></h5>
+              <h5 class="mt-3"><a href="#">Montant total des commandes</a></h5>
               <p class="text-sm font-weight-normal">Le montant total des commandes effectueés aujourd'hui.</p>
             </div>
             <hr class="vertical dark">
@@ -60,11 +60,16 @@
 </section>
 
 <style>
-  .produit-details, .produit-ligne{
+  .produit-ligne{
     display: flex; justify-content: space-between;
+    
   }
   .border1{
     border-bottom: 2px solid black;
+  }
+  .produit-details{
+    text-align: center;
+    margin-top: 10px;
   }
 </style>
 {{-- <button  class="btn btn-white mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fas fa-plus-circle"> Nouveau Utilisateur</i> </button>
@@ -174,7 +179,12 @@
             margin: .2rem .15rem;
             border-radius: 10rem;
             font-weight: 600;
-            color: blue;
+            color: #373738;
+            margin-bottom: 15px; 
+            margin-top: 10px;
+          }
+          .diva:visited{
+            color: #f5870e;
           }
         </style>
         <div id="details-food" style="display: none;">
@@ -184,10 +194,13 @@
               <h4>Détails Fast Food...</h4>
             </div>
           </div>
+          <style>
+            
+          </style>
           <div class="div">
             @forEach($sous_categorie as $sous)
             @if ($sous->categorie == 1)
-              <a class="diva" onclick="Get_produit('{{$sous->id}}','1');">
+              <a class="diva" onclick="Get_produit('{{$sous->id}}','1');" style=''>
                 {{$sous->libelle}}
               </a>
             @endif
@@ -323,7 +336,7 @@
             idProduit: idProduit,
             nomProduit: nomProduit,
             image: image,
-            quantite: 1
+            quantite: 1,
         });
 
         // Vérifier si le produit a plusieurs prix
@@ -348,6 +361,7 @@
                         image: image,
                         prixProduit: parseFloat(prix.trim()), // Convertir le prix en nombre
                         quantite: 1
+                        
                     });
 
                     // Mettre à jour l'affichage du panier
@@ -390,17 +404,25 @@ function updateCartDisplay() {
         produitDiv.innerHTML = `
           <div class="border1">
             <div class="produit-ligne">
-                <img src="{{asset('admintemplate')}}/assets/img/${produit.image}" width="60" alt="${produit.nomProduit}">
+          
+                <img src="{{asset('admintemplate')}}/assets/img/${produit.image}" width="60" style='margin-right: 20px;' alt="${produit.nomProduit}">
                 <span class="nom-produit">${produit.nomProduit}</span>
-                <span class="quantite">Quantité: ${produit.quantite}</span>
+                
             </div>
             <input class="form-control" type="hidden" name="produit[]" value="${produit.idProduit}"> 
             <input class="form-control" type="hidden" name="price[]" value="${produit.prixProduit}"> 
             <input class="form-control" type="hidden" name="quantity[]" value="${produit.quantite}"> 
+            
+            <span class="montant text-primary">Prix unitaire:  ${produit.prixProduit} Fr</span></br>
+            <span class="quantite">Quantité: ${produit.quantite}</span></br>
+            
+            <span class="montant">Total: ${produit.prixProduit*produit.quantite} Fr</span></br>
             <div class="produit-details">
-                <span class="montant text-primary">Prix unitaire:  ${produit.prixProduit} Fr</span>
-                <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">X</button> 
+                <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">Supprimer</button> 
             </div>
+            
+
+
           </div><br/>
         `;
 
