@@ -20,6 +20,7 @@
 
 <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
 
+@if(auth()->user()->profil_id == 1)
 <section class="pt-3 pb-4" id="count-stats">
   <div class="container">
     <div class="row">
@@ -58,7 +59,7 @@
     </div>
   </div>
 </section>
-
+@endif
 <style>
   .produit-ligne{
     display: flex; justify-content: space-between;
@@ -72,44 +73,6 @@
     margin-top: 10px;
   }
 </style>
-{{-- <button  class="btn btn-white mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fas fa-plus-circle"> Nouveau Utilisateur</i> </button>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modification Utilisateurs</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-            
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"> Modifier</i></button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Choisissez le prix</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Contenu du modal -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
 <section class="my-5 py-5">
   <div class="container">
     <div class="row">
@@ -135,35 +98,29 @@
         <div class="img">
           <div class="row justify-content-start">
             <div class="col-md-6">
-              <div class="info">
+              <div class="info text-center">
                 <h5 class="font-weight-bolder mt-3">Fast Food</h5>
-                <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px" onclick="showDetails('food');Get_produit('8', '1');">
-                </a>
+                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('food');Get_produit('8', '1',$('.diva:first')[0]);">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="info">
+              <div class="info text-center">
                 <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
-                <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" width="450" style="border-radius: 10px" onclick="showDetails('iceCream');Get_produit('1', '2');">
-                </a>
+                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('iceCream');Get_produit('1', '2',$('.diva1:first')[0]);">
               </div>
             </div>
           </div>
           <div class="row justify-content-start mt-5">
             <div class="col-md-6 mt-3">
+              <div class="info text-center">
               <h5 class="font-weight-bolder mt-3">Drink</h5>
-              <a>
-                <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="450" alt="" style="border-radius: 10px" onclick="showDetails('drink')">
-              </a>
+                <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink')">
+              </div>
             </div>
             <div class="col-md-6 mt-3">
-              <div class="info">
+              <div class="info text-center">
                 <h5 class="font-weight-bolder mt-3">Coffee</h5>
-                <a>
-                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="450" height="300" alt="" style="border-radius: 10px"onclick="showDetails('coffee');Get_produit('9', '3');">
-                </a>
+                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" height="250" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('coffee');Get_produit('9', '3',$('.diva2:first')[0]);">
               </div>
             </div>
           </div>
@@ -172,6 +129,7 @@
           .div {
             display: flex;
             flex-wrap: wrap;
+            /* overflow-x: auto; */
           }
           .diva{
             background-color: #f0f0f0;
@@ -182,14 +140,20 @@
             color: #373738;
             margin-bottom: 15px; 
             margin-top: 10px;
+            font-family: math;
+            cursor: pointer;
           }
+          .diva.active {
+                color: #f5870e;
+            }
+
           .diva:visited{
             color: #f5870e;
           }
         </style>
         <div id="details-food" style="display: none;">
           <div style="display: flex">
-            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4>Détails Fast Food...</h4>
             </div>
@@ -200,9 +164,9 @@
           <div class="div">
             @forEach($sous_categorie as $sous)
             @if ($sous->categorie == 1)
-              <a class="diva" onclick="Get_produit('{{$sous->id}}','1');" style=''>
+              <label class="diva" onclick="Get_produit('{{$sous->id}}','1',this);">
                 {{$sous->libelle}}
-              </a>
+              </label>
             @endif
             @endforeach
           </div>
@@ -213,7 +177,7 @@
         
         <div id="details-iceCream" style="display: none;">
           <div style="display: flex">
-            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4 style="font-family: match; font-size: 22px; margin-bottom: 10px">Nos offres d'Ice Cream...</h4>
             </div>
@@ -221,7 +185,7 @@
           <div class="div">
             @forEach($sous_categorie as $sous)
             @if ($sous->categorie == 2)
-              <a class="diva" onclick="Get_produit('{{$sous->id}}', '2');">
+              <a class="diva1 diva" onclick="Get_produit('{{$sous->id}}', '2',this);">
                 {{$sous->libelle}}
               </a>
             @endif
@@ -233,7 +197,7 @@
         </div>
         <div id="details-drink" style="display: none;">
           <div style="display: flex">
-            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4>Détails Drink...</h4>
             </div>
@@ -253,7 +217,7 @@
             <div class="col-lg-4">
               <div style="margin-bottom: 20px">
                 <div class="card">
-                  <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
+                  <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
                   <div style="margin-left: 10%;">
                     <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
                     <p><span>{{$produit->price}} Fr</span> </p>
@@ -268,7 +232,7 @@
         
         <div id="details-coffee" style="display: none;">
           <div style="display: flex">
-            <i class="fas fa-arrow-left" style="padding: 5px" onclick="showAllimage();"> Retour </i>
+            <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
               <h4>Détails Coffee...</h4>
             </div>
@@ -276,11 +240,12 @@
           <div class="div">
             @forEach($sous_categorie as $sous)
             @if ($sous->categorie == 3)
-              <a class="diva" onclick="Get_produit('{{$sous->id}}', '3');">
+              <a class="diva2 diva" onclick="Get_produit('{{$sous->id}}', '3', this);">
                 {{$sous->libelle}}
               </a>
             @endif
             @endforeach
+          </div>
             <div id="price3">
 
             </div>
@@ -394,6 +359,9 @@ function updateCartDisplay() {
     var panierDiv = document.getElementById('panier');
     panierDiv.innerHTML = "";  // Effacer le contenu actuel du panier
 
+    // Initialiser le montant total
+    var montantTotal = 0;
+
     // Parcourir les produits dans le panier et les ajouter à l'affichage
     panier.forEach(function(produit) {
         // Créer une div pour chaque produit
@@ -402,34 +370,36 @@ function updateCartDisplay() {
 
         // Ajouter du code HTML avec des balises pour chaque produit
         produitDiv.innerHTML = `
-          <div class="border1">
-            <div class="produit-ligne">
-          
-                <img src="{{asset('admintemplate')}}/assets/img/${produit.image}" width="60" style='margin-right: 20px;' alt="${produit.nomProduit}">
-                <span class="nom-produit">${produit.nomProduit}</span>
-                
-            </div>
-            <input class="form-control" type="hidden" name="produit[]" value="${produit.idProduit}"> 
-            <input class="form-control" type="hidden" name="price[]" value="${produit.prixProduit}"> 
-            <input class="form-control" type="hidden" name="quantity[]" value="${produit.quantite}"> 
-            
-            <span class="montant text-primary">Prix unitaire:  ${produit.prixProduit} Fr</span></br>
-            <span class="quantite">Quantité: ${produit.quantite}</span></br>
-            
-            <span class="montant">Total: ${produit.prixProduit*produit.quantite} Fr</span></br>
-            <div class="produit-details">
-                <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">Supprimer</button> 
-            </div>
-            
-
-
-          </div><br/>
+            <div class="border1">
+                <div class="produit-ligne">
+                    <img src="{{asset('admintemplate')}}/assets/img/${produit.image}" width="60" style='margin-right: 20px;' alt="${produit.nomProduit}">
+                    <span class="nom-produit">${produit.nomProduit}</span>
+                </div>
+                <input class="form-control" type="hidden" name="produit[]" value="${produit.idProduit}"> 
+                <input class="form-control" type="hidden" name="price[]" value="${produit.prixProduit}"> 
+                <input class="form-control" type="hidden" name="quantity[]" value="${produit.quantite}"> 
+                <span class="montant text-primary">Prix unitaire:  ${produit.prixProduit} Fr</span></br>
+                <span class="quantite">Quantité: ${produit.quantite}</span></br>
+                <span class="montant">Total: ${produit.prixProduit * produit.quantite} Fr</span></br>
+                <div class="produit-details">
+                    <button class="btn btn-sm btn-danger" onclick="supprimerProduit(${produit.idProduit})">Supprimer</button> 
+                </div>
+            </div><br/>
         `;
 
         // Ajouter la div du produit au panier
         panierDiv.appendChild(produitDiv);
+
+        // Mettre à jour le montant total
+        montantTotal += produit.prixProduit * produit.quantite;
     });
+
+    // Afficher le montant total
+    var montantTotalDiv = document.createElement('div');
+    montantTotalDiv.innerHTML = `<h5 class="text-primary">Montant Total: ${montantTotal} Fr</h5>`;
+    panierDiv.appendChild(montantTotalDiv);
 }
+
 function supprimerProduit(idProduit) {
     // Ajoutez ici votre logique pour supprimer le produit du panier en utilisant l'id du produit
     // Par exemple, vous pouvez utiliser une boucle pour trouver l'index du produit dans le tableau panier et le supprimer
@@ -444,7 +414,13 @@ function supprimerProduit(idProduit) {
     // Mettez à jour l'affichage du panier après la suppression
     updateCartDisplay();
 }
-function Get_produit(idProduit,id) {
+function Get_produit(idProduit, id, element) {
+    // Désactiver toutes les catégories
+    $(".diva").removeClass("active");
+
+    // Activer la catégorie sélectionnée
+    console.log('element',element)
+    $(element).addClass("active");
     $.ajax({
           url: "./Get_produit/" + idProduit,
           type: "GET",
@@ -453,12 +429,20 @@ function Get_produit(idProduit,id) {
               var plans = data.Type;
               var html = "";
               html += "<div class='row'>";
+                var image = "";
               for (let i = 0; i < plans.length; i++) {
+                if (plans[i]['image'] == null)
+                  {
+                    image = "food1.avif";
+                  } else
+                  {
+                    image = plans[i]['image'];
+                  }
                   html += `
                   <div class="col-lg-4">
                     <div style="margin-bottom: 20px">
                       <div class="card">
-                        <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" width="200"  style="border-radius: 5px" class="card-img-top mx-auto d-block" onclick="showDetailss('${plans[i]['id']}', '${plans[i]['libelle']}', '${plans[i]['price']}', 'cafe.avif')"><br>
+                        <img src="{{asset('admintemplate')}}/assets/img/${image}" width="200" height="200" style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('${plans[i]['id']}', '${plans[i]['libelle']}', '${plans[i]['price']}', '${image}')"><br>
                         <div style="margin-left: 10%;">
                         <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">${plans[i]['libelle']}</label>
                          <p><span>${plans[i]['price']} Fr</span> </p>
