@@ -85,7 +85,7 @@
          <div class="row" id="panier" style="font-size: 15px">
 
          </div>
-         <button type="submit" class="btn btn-primary w-100">Valider</button>
+         
          </form>
         </div>
       </div>
@@ -114,13 +114,13 @@
             <div class="col-md-6 mt-3">
               <div class="info text-center">
               <h5 class="font-weight-bolder mt-3">Drink</h5>
-                <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink')">
+                <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink')">
               </div>
             </div>
             <div class="col-md-6 mt-3">
               <div class="info text-center">
                 <h5 class="font-weight-bolder mt-3">Coffee</h5>
-                  <img src="{{asset('admintemplate')}}/assets/img/cafe.avif" height="250" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('coffee');Get_produit('9', '3',$('.diva2:first')[0]);">
+                  <img src="{{asset('admintemplate')}}/assets/img/cafe1.avif"  alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('coffee');Get_produit('9', '3',$('.diva2:first')[0]);">
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@
             <div class="col-lg-4">
               <div style="margin-bottom: 20px">
                 <div class="card">
-                  <img src="{{asset('admintemplate')}}/assets/img/boi2.avif" width="200"  style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'boi2.avif')"><br>
+                  <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" width="200"  style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'drink44.jpg')"><br>
                   <div style="margin-left: 10%;">
                     <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
                     <p><span>{{$produit->price}} Fr</span> </p>
@@ -396,7 +396,8 @@ function updateCartDisplay() {
 
     // Afficher le montant total
     var montantTotalDiv = document.createElement('div');
-    montantTotalDiv.innerHTML = `<h5 class="text-primary">Montant Total: ${montantTotal} Fr</h5>`;
+    montantTotalDiv.innerHTML = `<h5 class="text-primary">Montant Total: ${montantTotal} Fr</h5>
+                                <button type="submit" class="btn btn-primary w-100">Valider</button>`;
     panierDiv.appendChild(montantTotalDiv);
 }
 
