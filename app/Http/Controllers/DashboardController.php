@@ -22,12 +22,12 @@ class DashboardController extends Controller
         $user_id = Auth::user()->id;
         $nbre_commandes = DB::select("SELECT count(user_id) AS nbre FROM commandes WHERE user_id = $user_id and date_commande = CURRENT_DATE;");
         $sous_categorie = DB::select("SELECT * FROM `sous_categories`");
-        $commande = DB::select("SELECT date_commande, user_id, SUM(price_commande) as montant_total, SUM(quantity) as quantite_total
+        $commande = DB::select("SELECT date_commande,  user_id, SUM(price_commande * quantity) as montant_total
         FROM commandes
         INNER JOIN contenirs ON commandes.id = contenirs.commande
         WHERE user_id = $user_id and date_commande = CURRENT_DATE
         GROUP BY date_commande, user_id;");
-        $produits = DB::select("SELECT produits.id as ids, price, produits.libelle as libelle, categories.id as id_categorie,
+        $produits = DB::select("SELECT produits.id as ids, price, produits.libelle as libelle, quantite_disponible, categories.id as id_categorie,
          sous_categories.libelle as sous_categories , categories.libelle as categories
          FROM produits INNER join sous_categories on produits.type = sous_categories.id 
          inner join categories on categories.id = sous_categories.categorie;");
@@ -71,7 +71,11 @@ class DashboardController extends Controller
                  'price_commande' => $request->price[$j],
              ]);
          }
-         
+         foreach($request->produit as $key => $items){
+            $acien = Produit::where('id', $request->produit[$key])->value('quantite_disponible');
+            $update_soins['quantite_disponible'] = $acien - $request->quantity[$key];
+            DB::table('produits')->where('id', $request->produit[$key])->update($update_soins);
+         }
          
          return back()->with(['success' => 'commande effectuée avec succès.']);
     }

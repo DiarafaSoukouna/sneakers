@@ -5,6 +5,8 @@ use App\Models\SousCategorie;
 use App\Models\Produit;
 use App\Models\contenirs;
 use App\Models\Commande;
+use App\Models\Categorie;
+use App\Http\Controllers\Utilities\FileUtilsController;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -21,23 +23,25 @@ class contenir extends Controller
     {    
         $user_id = Auth::user()->id;
         $commande = DB::select("
-    SELECT
-        `date_commande`,
-        user_id,
-        SUM(price_commande) AS montant_total,
-        SUM(quantity) AS quantite_total
-    FROM
-        `commandes`
-    INNER JOIN
-        `contenirs` ON commandes.id = contenirs.commande
-    WHERE
-        user_id = $user_id
-    GROUP BY
-        `date_commande`, user_id
-");
+        SELECT
+            `date_commande`,
+            user_id,
+            SUM(price_commande) AS montant_total,
+            SUM(quantity) AS quantite_total
+        FROM
+            `commandes`
+        INNER JOIN
+            `contenirs` ON commandes.id = contenirs.commande
+        WHERE
+            user_id = $user_id
+        GROUP BY
+            `date_commande`, user_id
+    ");
         $SousCategorie = SousCategorie::all();
+        $Type =Produit::all();
         $user= User::all();
-        return view('commande', compact('SousCategorie', 'commande', 'user'));
+        $categorie= Categorie::all();
+        return view('commande', compact('SousCategorie', 'commande', 'user','Type', 'categorie'));
     }
 
     /**
@@ -55,7 +59,7 @@ class contenir extends Controller
 
     public function GetPrice($id_f){
 
-        $Price =Produit::where('id', $id_f)->get();
+        $Price =SousCategorie::where('categorie', $id_f)->get();
 
         return response()->json([
             'status'=>200,
@@ -74,20 +78,23 @@ class contenir extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   $dateActuelle = Carbon::now();
-
-       $commande = Commande::create([
-            'date_commande' => $dateActuelle,
-            'user_id' => Auth::user()->id,
+    {   
+        $imageName = time().$request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('admintemplate/assets/img', $imageName, 'public');
+        Produit::create([
+            'libelle' => $request->libelle,
+            'price' => $request->price,
+            'quantite_disponible' => $request->quantite_disponible,
+            'type' => $request->type,
+            'image' => $imageName ,
         ]);
-        for ($j = 0; $j < count($request->produit); $j++) {
-            contenirs::create([
-                'commande' => $commande->id,
-                'produit' => $request->produit[$j],
-                'quantity' => $request->quantity[$j],
-                'price_commande' => $request->price[$j],
-            ]);
-        }
+    //    $commande = Commande::create([
+    //         'date_commande' => $dateActuelle,
+    //         'user_id' => Auth::user()->id,
+    //     ]);
+    //     for ($j = 0; $j < count($request->produit); $j++) {
+           
+    //     }
         
         
         return back()->with(['success' => 'commande effectuée avec succès.']);
@@ -106,7 +113,11 @@ class contenir extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $produit=Produit::find($id);
+        return response()->json([
+        'satuts'=>2000,
+        'produit'=>$produit,
+        ]);
     }
 
     /**
@@ -114,14 +125,37 @@ class contenir extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $produit = Produit::find($id);
+        $produit->libelle = $request->libelle;
+        $produit->price = $request->price;
+        $produit->quantite_disponible = $request->quantite_disponible;
+        $produit->type = $request->type;
+        if($request->image != null){
+        $imageName = time().$request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('admintemplate/assets/img', $imageName, 'public');
+        $produit->image = $imageName;
+        }
+        $produit->update();
+
+        return redirect()->back();
     }
 
+    public function updatequantite(Request $request)
+    {
+
+            if($request->ajax()){
+                Produit::where('id', $request->pk)->update(['quantite_disponible' => $request->value]);
+                return response()->json(['success' => true]);
+            }
+
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $user= Produit::find($id);
+        $user->delete();
+        return  redirect()->back()->with('success', 'Produit supprimer avec success');
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
 <header class="header-2">
   <div class="page-header min-vh-75 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/foof5.jpg');background-size:cover">
-    <span class="mask opacity-4"></span>
+    {{-- <span class="mask opacity-4"></span> --}}
     <div class="container">
       <div class="row">
         <div class="col-lg-7 text-center mx-auto"> 
@@ -10,7 +10,7 @@
           {{-- <h2 class="text-white pt-3 mt-n5">SYSTEME D'INFORMATION DE GESTION(SIG)</h2> --}}
           {{-- <h2 class="text-white pt-3 ">Rapport mensuel  <br/> de l'établissement sanitaire primaire </h2> --}}
           <div class="buttons">
-            <a href="{{route('Commandes.index')}}" type="button" class="btn btn-white mt-4">Ajouter une commande</a>
+            <a href="{{route('Commandes.index')}}" type="button" class="btn btn-white mt-4">Ajouter un produit</a>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
             <div class="col-md-6 mt-3">
               <div class="info text-center">
               <h5 class="font-weight-bolder mt-3">Drink</h5>
-                <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink')">
+                <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink');Get_produit('14', '4',null);">
               </div>
             </div>
             <div class="col-md-6 mt-3">
@@ -211,23 +211,9 @@
             @endif
             @endforeach
           </div> --}}
-          <div class="row">
-            @foreach ($produits as $produit)
-            @if ($produit->id_categorie == 4)
-            <div class="col-lg-4">
-              <div style="margin-bottom: 20px">
-                <div class="card">
-                  <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" width="200"  style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('{{$produit->ids}}', '{{$produit->libelle}}', '{{$produit->price}}', 'drink44.jpg')"><br>
-                  <div style="margin-left: 10%;">
-                    <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">{{$produit->libelle}}</label>
-                    <p><span>{{$produit->price}} Fr</span> </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            @endif
-            @endforeach
-           </div>
+          <div id="price4">
+
+          </div>
         </div>
         
         <div id="details-coffee" style="display: none;">
@@ -291,65 +277,84 @@
     var produitExistant = panier.find(function(produit) {
         return produit.idProduit === idProduit;
     });
+    var quantiteDisponibleElement = document.getElementById('quantite-disponible-' + idProduit);
+    if (quantiteDisponibleElement && parseInt(quantiteDisponibleElement.dataset.quantity) > 0) {
+        // Déduire la quantité disponible
+        var nouvelleQuantite = parseInt(quantiteDisponibleElement.dataset.quantity) - 1;
 
-    if (produitExistant) {
-        // Si le produit existe déjà, augmenter la quantité
-        produitExistant.quantite += 1;
+        // Mettre à jour l'attribut de données avec la nouvelle quantité
+        quantiteDisponibleElement.dataset.quantity = nouvelleQuantite;
+
+        // Mettre à jour l'affichage de la quantité dans le texte de l'élément HTML
+        quantiteDisponibleElement.textContent = nouvelleQuantite + " Disponible";
+      if (produitExistant) {
+          // Si le produit existe déjà, augmenter la quantité
+          produitExistant.quantite += 1;
+      } else {
+          // Sinon, ajouter le produit au panier avec une quantité de 1 par défaut
+          panier.push({
+              idProduit: idProduit,
+              nomProduit: nomProduit,
+              image: image,
+              quantite: 1,
+          });
+
+          // Vérifier si le produit a plusieurs prix
+          if (prixProduit.includes(',')) {
+              // Si oui, divisez la chaîne en un tableau de prix
+              var prixArray = prixProduit.split(',');
+
+              // Afficher le modal avec les différents prix
+              var modal = document.getElementById('myModal');
+              var modalBody = modal.querySelector('.modal-body');
+              modalBody.innerHTML = '';
+
+              prixArray.forEach(function(prix) {
+                  var prixButton = document.createElement('button');
+                  prixButton.textContent = prix.trim() + ' Fr';
+                  prixButton.className = 'btn btn-primary';
+                  prixButton.onclick = function() {
+                      // Ajouter le produit avec le prix sélectionné au panier
+                      panier.push({
+                          idProduit: idProduit,
+                          nomProduit: nomProduit,
+                          image: image,
+                          prixProduit: parseFloat(prix.trim()), // Convertir le prix en nombre
+                          quantite: 1
+                          
+                      });
+
+                      // Mettre à jour l'affichage du panier
+                      updateCartDisplay();
+
+                      // Fermer le modal
+                      $('#myModal').modal('hide');
+                  };
+
+                  modalBody.appendChild(prixButton);
+              });
+
+              // Afficher le modal
+              $('#myModal').modal('show');
+          } else {
+              // Si un seul prix, ajouter directement au panier
+              panier[panier.length - 1].prixProduit = parseFloat(prixProduit);
+              updateCartDisplay();
+          }
+      }
+
+      // Mettre à jour l'affichage du panier
+      updateCartDisplay();
     } else {
-        // Sinon, ajouter le produit au panier avec une quantité de 1 par défaut
-        panier.push({
-            idProduit: idProduit,
-            nomProduit: nomProduit,
-            image: image,
-            quantite: 1,
+        // Afficher une alerte si la quantité disponible est épuisée
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Quantité insuffisante. " + nomProduit + " est en rupture de stock.",
+          confirmButtonColor: "#F5870E", // Code couleur orange
         });
-
-        // Vérifier si le produit a plusieurs prix
-        if (prixProduit.includes(',')) {
-            // Si oui, divisez la chaîne en un tableau de prix
-            var prixArray = prixProduit.split(',');
-
-            // Afficher le modal avec les différents prix
-            var modal = document.getElementById('myModal');
-            var modalBody = modal.querySelector('.modal-body');
-            modalBody.innerHTML = '';
-
-            prixArray.forEach(function(prix) {
-                var prixButton = document.createElement('button');
-                prixButton.textContent = prix.trim() + ' Fr';
-                prixButton.className = 'btn btn-primary';
-                prixButton.onclick = function() {
-                    // Ajouter le produit avec le prix sélectionné au panier
-                    panier.push({
-                        idProduit: idProduit,
-                        nomProduit: nomProduit,
-                        image: image,
-                        prixProduit: parseFloat(prix.trim()), // Convertir le prix en nombre
-                        quantite: 1
-                        
-                    });
-
-                    // Mettre à jour l'affichage du panier
-                    updateCartDisplay();
-
-                    // Fermer le modal
-                    $('#myModal').modal('hide');
-                };
-
-                modalBody.appendChild(prixButton);
-            });
-
-            // Afficher le modal
-            $('#myModal').modal('show');
-        } else {
-            // Si un seul prix, ajouter directement au panier
-            panier[panier.length - 1].prixProduit = parseFloat(prixProduit);
-            updateCartDisplay();
-        }
-    }
-
-    // Mettre à jour l'affichage du panier
-    updateCartDisplay();
+        // alert("Quantité insuffisante. Le produit est en rupture de stock.");s
+    }    
 }
 
 
@@ -400,7 +405,9 @@ function updateCartDisplay() {
                                 <button type="submit" class="btn btn-primary w-100">Valider</button>`;
     panierDiv.appendChild(montantTotalDiv);
 }
-
+var essai = "";
+var essai1 = "";
+var essai2 ;
 function supprimerProduit(idProduit) {
     // Ajoutez ici votre logique pour supprimer le produit du panier en utilisant l'id du produit
     // Par exemple, vous pouvez utiliser une boucle pour trouver l'index du produit dans le tableau panier et le supprimer
@@ -411,14 +418,28 @@ function supprimerProduit(idProduit) {
             break; // Sortir de la boucle une fois que le produit est trouvé et supprimé
         }
     }
-    console.log("moh", idProduit); //
     // Mettez à jour l'affichage du panier après la suppression
-    updateCartDisplay();
+    updateCartDisplay(); 
+    Get_produit(essai, essai1, essai2)
+}
+function GetProduitQuantite(idProduit) {
+    // Ajoutez ici votre logique pour supprimer le produit du panier en utilisant l'id du produit
+    // Par exemple, vous pouvez utiliser une boucle pour trouver l'index du produit dans le tableau panier et le supprimer
+    var qte = 0
+    for (var i = 0; i < panier.length; i++) {
+        if ( parseInt(panier[i].idProduit) === idProduit) {
+            qte = parseInt(panier[i].quantite)
+            break; // Sortir de la boucle une fois que le produit est trouvé et supprimé
+        }
+    }
+    return qte;
 }
 function Get_produit(idProduit, id, element) {
     // Désactiver toutes les catégories
     $(".diva").removeClass("active");
-
+    essai = idProduit;
+    essai1 = id;
+    essai2 = element;
     // Activer la catégorie sélectionnée
     console.log('element',element)
     $(element).addClass("active");
@@ -447,6 +468,7 @@ function Get_produit(idProduit, id, element) {
                         <div style="margin-left: 10%;">
                         <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">${plans[i]['libelle']}</label>
                          <p><span>${plans[i]['price']} Fr</span> </p>
+                         <p><label id="quantite-disponible-${plans[i]['id']}" class="text-info" data-quantity="${plans[i]['quantite_disponible'] - GetProduitQuantite(plans[i]['id'])}">${plans[i]['quantite_disponible'] - GetProduitQuantite(plans[i]['id'])} Disponible</label></p>
                         </div>
                       </div>
                     </div>

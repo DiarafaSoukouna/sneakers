@@ -245,7 +245,7 @@
                     <td class="text-center">
                       <div class="buttons">
                         <button href="#" type="button" id="{{ $item->id }}" onclick="showEditModal({{ $item->id }})" class="btn btn-info btn-sm me-2  user_edit"><i class="fas fa-edit"></i></button>
-                        </div>
+                      </div>
                     </td>
                     <td class="text-center">
                       <div class="buttons">
@@ -268,7 +268,7 @@
       </div>
     </div>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{asset('admintemplate')}}/dist/js/sweetalert.js"></script>
     <script>
       function showDeleteConfirmation(userId) {
           Swal.fire({

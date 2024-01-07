@@ -57,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('Commandes', contenir::class);
         Route::get('Type_get/{id_f}', [contenir::class, 'GetType']);
         Route::get('Price_get/{id_f}', [contenir::class, 'GetPrice']);
+        Route::delete('/contenir/{id}',  [contenir::class, 'destroy'])->name('contenir.destroy');
+        Route::get('/produit_edit/{id}',  [contenir::class, 'edit'])->name('produit.edit');
+        Route::post('produit_update',[contenir::class,'updatequantite'])->name('quantite.update');
+        Route::PATCH('/produit_update/{id}',  [contenir::class, 'update'])->name('produit.update');
     
         Route::get('/rapports/generate-pdf/{Rapport}', [RapportsController::class, 'generatePDF'])->name('Rapports_pdf.generatePDF');
 

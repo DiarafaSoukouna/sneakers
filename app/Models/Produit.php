@@ -14,6 +14,8 @@ class Produit extends Model
         'libelle',
         'price',
         'type',
+        'quantite_disponible',
+        'image',
     ];
 
     protected $primaryKey = 'id';
