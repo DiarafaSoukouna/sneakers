@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Parametres\Users;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\contenir;
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/produit_edit/{id}',  [contenir::class, 'edit'])->name('produit.edit');
         Route::post('produit_update',[contenir::class,'updatequantite'])->name('quantite.update');
         Route::PATCH('/produit_update/{id}',  [contenir::class, 'update'])->name('produit.update');
-    
+        
+
+
+        Route::resource('CommandePayment', CommandeController::class);
+        Route::PATCH('/commande_update/{id}',  [CommandeController::class, 'update']);
+        Route::PATCH('/commande_reset/{id}',  [CommandeController::class, 'reset'])->name('commande.reset');
+        Route::get('/commande_edit/{id}',  [CommandeController::class, 'edit']);
         Route::get('/rapports/generate-pdf/{Rapport}', [RapportsController::class, 'generatePDF'])->name('Rapports_pdf.generatePDF');
 
     });

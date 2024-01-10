@@ -1,151 +1,71 @@
 @extends('layouts.Dashboard')
 @section('content')
 
-<section class="my-5 py-5">
-    <br>
-    <br>
-    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-        <div class="container border-bottom">
-           <div style="display: flex; justify-content:space-between">
-            <div>la liste des produits</div>
-              <div>
-                <button  class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal"> <i class="fas fa-plus-circle"> Nouveau Utilisateur</i> 
-                </button>
-              </div>
-           </div> 
+<header class="header-2">
+  <div class="page-header min-vh-25 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/foof5.jpg')">
+    <span class="mask opacity-4"></span>
+    <div class="container">
+       <div class="row">
+        <div class="col-lg-7 text-center mx-auto">
+            <br>
         </div>
-        <br>
-         
-        <div class="card-body">
-            <div class="tab-content tab-space">
-                <div class="tab-pane active" id="preview-forms-simple">
-                  
-                <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table
-                        id="datatable"
-                        class="table table-striped table-bordered"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nom du produit</th>
-                            <th>Prix </th>
-                            <th>Type</th>
-                            <th>Quantité disponible</th>
-                            <th>Image</th>
-                            <th>#</th>
-                            <th>#</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($Type as $item)
-                              <tr>
-                                  <td>{{$item->libelle}}</td>
-                                  <td>{{$item->price}}</td>
-                                  @foreach ($SousCategorie as $items)
-                                  @if ($items->id == $item->type)
-                                  <td>{{$items->libelle }}</td>
-                                  @endif
-                                  @endforeach
-                                  <td><a href="#" class="editable" data-type="text" data-name="quantite" data-pk="{{ $item->id }}"> {{$item->quantite_disponible }} </a> </td>
-                                  <td> <img src="{{asset('admintemplate')}}/assets/img/{{$item->image}}" alt="" style="border-radius:80px;width:10%" ></td>
-                                  <td class="text-center">
-                                    <div class="buttons">
-                                      <button type="button" id="{{ $item->id }}" onclick="showEditModal({{ $item->id }})" class="btn btn-info btn-sm me-2  user_edit"><i class="fas fa-edit"></i></button>
-                                    </div>
-                                  </td>
-                                  {{-- <td><button class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button></td> --}}
-                                  <td class="text-center">
-                                    <div class="buttons">
-                                     <form method="POST" action="{{ route('contenir.destroy', ['id' => $item->id]) }}" id="delete-form-{{ $item->id }}">
-                                              @csrf
-                                              @method('DELETE')
-                                              <button type="button" onclick="showDeleteConfirmation({{ $item->id }})" class="btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i> </button>
-                                      </form>
-                                     </div>
-                                  </td>
-                              </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="code-forms-simple">
-                <div class="row" >
-                  <div class="col-lg-10 mx-auto d-flex justify-content-center flex-column">
-                  <h3 class="text-center" style="font-family: math">Commande</h3>
-                  @if(session('success'))
-                  <div class="alert alert-success" style="--bs-alert-padding-y: 0.5rem !important; ">
-                     <div class="text-center text-white">{{ session('success') }}</div> 
-                  </div>
+      </div> 
+    </div>
+  </div>
+</header>
+<section>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        id="datatable"
+        class="table table-striped table-bordered"
+      >
+        <thead>
+          <tr>
+            <th>Nom du produit</th>
+            <th>Prix </th>
+            <th>Type</th>
+            <th>Quantité disponible</th>
+            <th>Image</th>
+            <th>#</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($Type as $item)
+              <tr>
+                  <td>{{$item->libelle}}</td>
+                  <td>{{$item->price}}</td>
+                  @foreach ($SousCategorie as $items)
+                  @if ($items->id == $item->type)
+                  <td>{{$items->libelle }}</td>
                   @endif
-                  <form role="form" id="contact-form" action="{{route('Commandes.store')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
-                      <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-2">
-                          <label class="form-label">Categorie</label>
-                          <div class="input-group input-group mb-4">
-                            <select class="form-control" id="categorie">  
-                              <option value="">-- choisir --</option>
-                              @foreach($categorie as $cate)
-                              <option value="{{$cate->id}}">{{$cate->libelle}}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <label class="form-label">Type</label>
-                          <div class="input-group input-group mb-4">
-                            <select class="form-control type_id" id="type_id" name="type" required>
-                              
-                            </select>
-                          </div>
-                        </div>
-                          <div class="col-md-2">
-                            <label class="form-label">Nom</label>
-                            <div class="input-group input-group mb-4">
-                              <input class="form-control quantity"  name="libelle" type="text" placeholder="le nom">  
-                            </div>
-                          </div>
-                          <div class="col-md-2">
-                            <label class="form-label">Prix</label>
-                            <div class="input-group input-group mb-4">
-                              <input class="form-control quantity"  name="price" type="number" placeholder="le prix">  
-                            </div>
-                          </div>
-                          <div class="col-md-2">
-                            <label class="form-label">Quantité disponible</label>
-                            <div class="input-group input-group mb-4">
-                              <input class="form-control"   name="quantite_disponible" type="number" placeholder="la quantité">  
-                            </div>
-                          </div>
-                         
-                          {{-- <div class="col-md-2">
-                            <label class="form-label"></label>
-                            <div class="input-group input-group mb-4">
-                                <button type="button" id="addcolumn" class="btn btn-info btn-sm me-2"><i class="fas fa-plus">add row</i></button>
-                            </div>
-                          </div> --}}
-                      </div>
-                      <div id="dynamicadd"></div>
-                       <div class="row">
-                          <div class="col-md-12">
-                          <button type="submit" class="btn btn-primary w-100">Valider</button>
-                          </div>
-                      </div>
-                      </div>
-                  </form>
-                  </div>
-              </div>
-              </div>
-        </div>
-
-       </div>
+                  @endforeach
+                  <td><a href="#" class="editable" data-type="text" data-name="quantite" data-pk="{{ $item->id }}"> {{$item->quantite_disponible }} </a> </td>
+                  <td> <img src="{{asset('admintemplate')}}/assets/img/{{$item->image}}" alt="" style="border-radius:80px;width:10%" ></td>
+                  <td class="text-center">
+                    <div class="buttons">
+                      <button type="button" id="{{ $item->id }}" onclick="showEditModal({{ $item->id }})" class="btn btn-info btn-sm me-2  user_edit"><i class="fas fa-edit"></i></button>
+                    </div>
+                  </td>
+                  {{-- <td><button class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button></td> --}}
+                  <td class="text-center">
+                    <div class="buttons">
+                     <form method="POST" action="{{ route('contenir.destroy', ['id' => $item->id]) }}" id="delete-form-{{ $item->id }}">
+                              @csrf
+                              @method('DELETE')
+                              <button type="button" onclick="showDeleteConfirmation({{ $item->id }})" class="btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i> </button>
+                      </form>
+                     </div>
+                  </td>
+              </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
        
     {{--<div class="container">
         <div class="row">

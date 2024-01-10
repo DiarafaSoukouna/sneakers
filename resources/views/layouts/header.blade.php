@@ -27,6 +27,16 @@
                         <span>Utilisateurs</span>
                       </a>
                     </div>
+                    <div class="d-none d-lg-block">
+                      <a href="{{route('Commandes.index')}}" class="dropdown-item border-radius-md">
+                        <span>Produits</span>
+                      </a>
+                    </div>
+                    <div class="d-none d-lg-block">
+                      <a href="{{route('CommandePayment.index')}}" class="dropdown-item border-radius-md">
+                        <span>Commandes</span>
+                      </a>
+                    </div>
                   </div>
                 </li>
                 @endif

@@ -10,7 +10,7 @@
           {{-- <h2 class="text-white pt-3 mt-n5">SYSTEME D'INFORMATION DE GESTION(SIG)</h2> --}}
           {{-- <h2 class="text-white pt-3 ">Rapport mensuel  <br/> de l'établissement sanitaire primaire </h2> --}}
           <div class="buttons">
-            <a href="{{route('Commandes.index')}}" type="button" class="btn btn-white mt-4">Ajouter un produit</a>
+            <a href="{{route('CommandePayment.index')}}" type="button" class="btn btn-white mt-4">Valider une commande</a>
           </div>
         </div>
       </div>
