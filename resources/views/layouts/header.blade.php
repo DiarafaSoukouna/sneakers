@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid px-0">
             <a class="navbar-brand font-weight-bolder ms-sm-3" href="{{route('dashboard')}}" data-placement="bottom" >
-              <img src="{{asset('admintemplate')}}/assets/img/log.png" alt="photo logo" width='60'>
+              <!-- <img src="{{asset('admintemplate')}}/assets/img/log.png" alt="photo logo" width='60'> -->
             <i class="fas fa-home"> SONINKE SNEAKERS</i>  
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">

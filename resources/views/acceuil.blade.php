@@ -46,9 +46,13 @@
           </div>
           <div class="col-md-4 position-relative">
             <div class="p-3 text-center">
+              @if (count($commande) > 0)
               @foreach ($commande as $com)
               <h1 class="text-gradient text-primary"> <span id="state1" countTo="{{$com->montant_total}}">0</span></h1>
               @endforeach
+              @else
+              <h1 class="text-gradient text-primary"> <span id="state1" countTo="0">0</span></h1>
+              @endif
               <h5 class="mt-3"><a href="#">Montant total des ventes</a></h5>
               <p class="text-sm font-weight-normal">Le montant total des ventes effectueés aujourd'hui.</p>
             </div>
@@ -106,7 +110,7 @@
             <div class="col-md-6">
               <div class="info text-center">
                 <h5 class="font-weight-bolder mt-3">Chemise</h5>
-                  <img src="{{asset('admintemplate')}}/assets/img/chemise1.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('iceCream');Get_produit('1', '2',$('.diva1:first')[0]);">
+                  <img src="{{asset('admintemplate')}}/assets/img/chemise1.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('iceCream');Get_produit('2', '2',$('.diva1:first')[0]);">
               </div>
             </div>
           </div>
@@ -436,6 +440,7 @@ function GetProduitQuantite(idProduit) {
 }
 function Get_produit(idProduit, id, element) {
     // Désactiver toutes les catégories
+    // alert('a'+idProduit, 'a'+id, 'a'+element);
     $(".diva").removeClass("active");
     essai = idProduit;
     essai1 = id;
