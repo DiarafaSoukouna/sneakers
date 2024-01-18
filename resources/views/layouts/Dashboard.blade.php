@@ -13,7 +13,7 @@
 
 <script src="{{asset('admintemplate')}}/assets/libs/select2/dist/js/select2.full.min.js"></script>
 <script src="{{asset('admintemplate')}}/assets/libs/select2/dist/js/select2.min.js"></script>
-<title> HOUSE CREAM</title>
+<title> SONINKE SNEAKERS</title>
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 <link href="{{asset('admintemplate')}}/dist/css/editable.css" rel="stylesheet"/>
