@@ -13,6 +13,7 @@ class Commande extends Model
     protected $fillable = [
         'date_commande',
         'user_id',
+        'statut',
     ];
 
     protected $primaryKey = 'id';

@@ -1,7 +1,7 @@
 @extends('layouts.Dashboard')
 @section('content')
 <header class="header-2">
-  <div class="page-header min-vh-25 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/foof5.jpg')">
+  <div class="page-header min-vh-25 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/chaussures.jpg')">
     <span class="mask opacity-4"></span>
     <div class="container">
        <div class="row">
@@ -30,7 +30,7 @@
               <th>Numéro</th>
               <th>Date de la commande</th>
               <th>Montant</th>
-              <th>Insert by </th>
+              <th>Effectuée par</th>
               <th>#</th>
               {{--<th>#</th> --}}
             </tr>

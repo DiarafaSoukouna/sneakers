@@ -1,7 +1,7 @@
 @extends('layouts.Dashboard')
 @section('content')
 <header class="header-2">
-  <div class="page-header min-vh-75 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/foof5.jpg');background-size:cover">
+  <div class="page-header min-vh-55 relative" style="background-image: url('{{asset('admintemplate')}}/assets/img/chaussures.jpg');background-size:cover">
     {{-- <span class="mask opacity-4"></span> --}}
     <div class="container">
       <div class="row">
@@ -39,8 +39,8 @@
               @foreach ($nbre_commandes as $com)
               <h1 class="text-gradient text-primary"> <span id="state2" countTo="{{$com->nbre}}">0</span></h1>
               @endforeach
-              <h5 class="mt-3"><a href="{{route('Commandes.index')}}">Nombre de commande</a></h5>
-              <p class="text-sm font-weight-normal">Le nombre de commande effectueé aujourd'hui. </p>
+              <h5 class="mt-3"><a href="{{route('Commandes.index')}}">Nombre de ventes</a></h5>
+              <p class="text-sm font-weight-normal">Le nombre de ventes effectueés aujourd'hui. </p>
             </div>
             <hr class="vertical dark">
           </div>
@@ -49,8 +49,8 @@
               @foreach ($commande as $com)
               <h1 class="text-gradient text-primary"> <span id="state1" countTo="{{$com->montant_total}}">0</span></h1>
               @endforeach
-              <h5 class="mt-3"><a href="#">Montant total des commandes</a></h5>
-              <p class="text-sm font-weight-normal">Le montant total des commandes effectueés aujourd'hui.</p>
+              <h5 class="mt-3"><a href="#">Montant total des ventes</a></h5>
+              <p class="text-sm font-weight-normal">Le montant total des ventes effectueés aujourd'hui.</p>
             </div>
             <hr class="vertical dark">
           </div>
@@ -99,28 +99,28 @@
           <div class="row justify-content-start">
             <div class="col-md-6">
               <div class="info text-center">
-                <h5 class="font-weight-bolder mt-3">Fast Food</h5>
-                  <img src="{{asset('admintemplate')}}/assets/img/food1.avif"alt="" width="450" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('food');Get_produit('8', '1',$('.diva:first')[0]);">
+                <h5 class="font-weight-bolder mt-3">Costume</h5>
+                  <img src="{{asset('admintemplate')}}/assets/img/costume1.jpg"alt="" width="450" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('food');Get_produit('8', '1',$('.diva:first')[0]);">
               </div>
             </div>
             <div class="col-md-6">
               <div class="info text-center">
-                <h5 class="font-weight-bolder mt-3">Ice Cream</h5>
-                  <img src="{{asset('admintemplate')}}/assets/img/oklm.avif" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('iceCream');Get_produit('1', '2',$('.diva1:first')[0]);">
+                <h5 class="font-weight-bolder mt-3">Chemise</h5>
+                  <img src="{{asset('admintemplate')}}/assets/img/chemise1.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('iceCream');Get_produit('1', '2',$('.diva1:first')[0]);">
               </div>
             </div>
           </div>
           <div class="row justify-content-start mt-5">
             <div class="col-md-6 mt-3">
               <div class="info text-center">
-              <h5 class="font-weight-bolder mt-3">Drink</h5>
-                <img src="{{asset('admintemplate')}}/assets/img/drink44.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('drink');Get_produit('14', '4',null);">
+              <h5 class="font-weight-bolder mt-3">Chaussures</h5>
+                <img src="{{asset('admintemplate')}}/assets/img/chaussureV.jpg" alt="" style="border-radius: 10px;width:80%;cursor: pointer; height: 430px;" onclick="showDetails('drink');Get_produit('14', '4',null);">
               </div>
             </div>
             <div class="col-md-6 mt-3">
               <div class="info text-center">
-                <h5 class="font-weight-bolder mt-3">Coffee</h5>
-                  <img src="{{asset('admintemplate')}}/assets/img/cafe1.avif"  alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('coffee');Get_produit('9', '3',$('.diva2:first')[0]);">
+                <h5 class="font-weight-bolder mt-3">Jogging</h5>
+                  <img src="{{asset('admintemplate')}}/assets/img/joggingV.jpg"  alt="" style="border-radius: 10px;width:80%;cursor: pointer;" onclick="showDetails('coffee');Get_produit('9', '3',$('.diva2:first')[0]);">
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
-              <h4>Détails Fast Food...</h4>
+              <h4>Détails Costume...</h4>
             </div>
           </div>
           <style>
@@ -179,7 +179,7 @@
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
-              <h4 style="font-family: match; font-size: 22px; margin-bottom: 10px">Nos offres d'Ice Cream...</h4>
+              <h4 style="font-family: match; font-size: 22px; margin-bottom: 10px">Details Chemise</h4>
             </div>
           </div>
           <div class="div">
@@ -199,7 +199,7 @@
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
-              <h4>Détails Drink...</h4>
+              <h4>Détails chaussure</h4>
             </div>
           </div>
           {{-- <div class="div">
@@ -220,7 +220,7 @@
           <div style="display: flex">
             <i class="fas fa-arrow-left" style="padding: 5px;cursor: pointer;" onclick="showAllimage();"> Retour </i>
             <div style="margin-left: 30%">
-              <h4>Détails Coffee...</h4>
+              <h4>Détails Jogging</h4>
             </div>
           </div>
           <div class="div">
@@ -464,7 +464,7 @@ function Get_produit(idProduit, id, element) {
                   <div class="col-lg-4">
                     <div style="margin-bottom: 20px">
                       <div class="card">
-                        <img src="{{asset('admintemplate')}}/assets/img/${image}" width="200" height="200" style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('${plans[i]['id']}', '${plans[i]['libelle']}', '${plans[i]['price']}', '${image}')"><br>
+                        <img src="{{asset('admintemplate')}}/assets/img/${image}" width="200" height="300" style="border-radius: 5px;cursor: pointer;" class="card-img-top mx-auto d-block" onclick="showDetailss('${plans[i]['id']}', '${plans[i]['libelle']}', '${plans[i]['price']}', '${image}')"><br>
                         <div style="margin-left: 10%;">
                         <label for="" style="font-size: 20px;color: black;font-weight: 600;font-family: math;">${plans[i]['libelle']}</label>
                          <p><span>${plans[i]['price']} Fr</span> </p>

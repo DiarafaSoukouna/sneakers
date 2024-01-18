@@ -8,7 +8,7 @@
         <div class="col-lg-7 text-center mx-auto">
           <h1 class="text-white pt-3 mt-n5">La liste des utilisateurs</h1>
            <div class="buttons">
-            <button  class="btn btn-white mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fas fa-plus-circle"> Nouveau Utilisateur</i> </button>
+            <button  class="btn btn-white mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-top: 50px;"> <i class="fas fa-plus-circle"> Nouvel Utilisateur</i> </button>
           </div>
         </div>
       </div> 
@@ -20,7 +20,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle Utilisateur</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Nouvel Utilisateur</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <span aria-hidden="true">&times;</span>
         </button>

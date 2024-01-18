@@ -43,7 +43,7 @@
                   @endif
                   @endforeach
                   <td><a href="#" class="editable" data-type="text" data-name="quantite" data-pk="{{ $item->id }}"> {{$item->quantite_disponible }} </a> </td>
-                  <td> <img src="{{asset('admintemplate')}}/assets/img/{{$item->image}}" alt="" style="border-radius:80px;width:10%" ></td>
+                  <td> <img src="{{asset('admintemplate')}}/assets/img/{{$item->image}}" alt="" style="border-radius:30px;width:20%; margin-left: 30%" ></td>
                   <td class="text-center">
                     <div class="buttons">
                       <button type="button" id="{{ $item->id }}" onclick="showEditModal({{ $item->id }})" class="btn btn-info btn-sm me-2  user_edit"><i class="fas fa-edit"></i></button>

@@ -23,7 +23,9 @@ class CommandeController extends Controller
             FROM commandes
             INNER JOIN contenirs ON commandes.id = contenirs.commande
             WHERE date_commande = CURRENT_DATE 
-            GROUP BY date_commande, commandes.id order by statut asc;");
+            GROUP BY commandes.id, date_commande, statut, user_id
+            ORDER BY statut ASC;");
+
         }else {
             $commande = DB::select("SELECT commandes.id as id, date_commande, statut, user_id, SUM(price_commande * quantity) as montant_total
             FROM commandes
